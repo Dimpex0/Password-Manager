@@ -38,7 +38,7 @@ def create_view():
                         vscrollmode='dynamic',
                         hscrollmode='dynamic',
                         labelpos='n',
-                        label_text='file %s' % filename,
+                        label_text='Your passwords:', 'file %s' % filename
                         text_width=40,
                         text_height=4,
                         text_wrap='none', )
@@ -70,12 +70,12 @@ l1.grid(row=0)
 l2 = Label(root, text='Choose if you want to view your passwords, create new, delete them or exit the app.',
            font='Helvetica 10')
 l2.grid(row=1)
-btn1 = Button(root, text='ADD', bg='white', command=create_add)
-btn1.place(x=150, y=70)
-btn2 = Button(root, text='VIEW', bg='white', command=create_view)
-btn2.place(x=200, y=70)
+btn1 = Button(root, text=' ADD  ', bg='green', command=create_add)
+btn1.place(x=80, y=70)
+btn2 = Button(root, text=' VIEW ', bg='white', command=create_view)
+btn2.place(x=175, y=70)
 btn3 = Button(root, text='DELETE', bg='white', command=delete)
-btn3.place(x=250, y=70)
-btn4 = Button(root, text='EXIT', bg='white', command=exit_app)
-btn4.place(x=315, y=70)
+btn3.place(x=265, y=70)
+btn4 = Button(root, text=' EXIT ', bg='red', command=exit_app)
+btn4.place(x=370, y=70)
 root.mainloop()
