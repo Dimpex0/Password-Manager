@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import messagebox
-import Pmw
 from Pmw.Pmw_2_0_1.lib.PmwScrolledText import ScrolledText
 
 
@@ -38,7 +37,7 @@ def create_view():
                         vscrollmode='dynamic',
                         hscrollmode='dynamic',
                         labelpos='n',
-                        label_text='Your passwords:', #'file %s' % filename
+                        label_text='Your passwords:',  # 'file %s' % filename
                         text_width=40,
                         text_height=4,
                         text_wrap='none', )
