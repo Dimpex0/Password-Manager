@@ -38,7 +38,7 @@ def create_view():
                         vscrollmode='dynamic',
                         hscrollmode='dynamic',
                         labelpos='n',
-                        label_text='Your passwords:', 'file %s' % filename
+                        label_text='Your passwords:', #'file %s' % filename
                         text_width=40,
                         text_height=4,
                         text_wrap='none', )
