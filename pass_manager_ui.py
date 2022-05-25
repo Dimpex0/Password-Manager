@@ -57,10 +57,6 @@ def delete():
         pass
 
 
-def exit_app():
-    quit()
-
-
 root = Tk()
 root.title('Password Manager')
 root.geometry("500x150")
@@ -75,6 +71,6 @@ btn2 = Button(root, text=' VIEW ', bg='white', command=create_view)
 btn2.place(x=175, y=70)
 btn3 = Button(root, text='DELETE', bg='white', command=delete)
 btn3.place(x=265, y=70)
-btn4 = Button(root, text=' EXIT ', bg='red', command=exit_app)
+btn4 = Button(root, text=' EXIT ', bg='red', command=root.destroy)
 btn4.place(x=370, y=70)
 root.mainloop()
