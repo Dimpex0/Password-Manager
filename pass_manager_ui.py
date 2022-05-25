@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-from Pmw.Pmw_2_0_1.lib.PmwScrolledText import ScrolledText
+from Pmw import ScrolledText
 
 
 def create_add():
@@ -58,7 +58,7 @@ def delete():
 
 
 def exit_app():
-    exit()
+    quit()
 
 
 root = Tk()
