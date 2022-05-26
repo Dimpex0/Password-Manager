@@ -48,7 +48,7 @@ def create_view():
 
 
 def delete():
-    res = messagebox.askquestion('are you sure?', 'Are you sure?')
+    res = messagebox.askquestion('Are you sure?', 'Are you sure?')
     if res == 'yes':
         f = open('my_passwords.txt', 'r+')
         f.truncate(0)
