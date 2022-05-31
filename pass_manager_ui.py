@@ -1,6 +1,9 @@
+import base64
 from tkinter import *
 from tkinter import messagebox
 from Pmw import ScrolledText
+from cryptography.fernet import Fernet
+from cryptography import *
 
 
 def main_app():
@@ -74,49 +77,63 @@ def main_app():
     root.mainloop()
 
 
+def key_write():
+    key = Fernet.generate_key()
+    with open('key.key', 'wb') as key_file:
+        key_file.write(key)
+
+
+def load_key():
+    file = open('key.key', 'rb')
+    key = file.read()
+    file.close()
+    return key
+
+
 def authentication():
     auth = Tk()
     auth.title('Authentication')
-    auth.geometry("300x300")
+    auth.geometry("300x200")
     l1 = Label(auth, text='Welcome!', bg='white', fg='black', font='Helvetica 13')
     l1.place(x=110, y=0)
-    l2 = Label(auth, text='Username:', bg='white')
+    l2 = Label(auth, text='Password:', bg='white')
     l2.place(x=115, y=50)
     en1 = Entry(auth, bg='white')
     en1.place(x=85, y=80)
-    l3 = Label(auth, text='Password:', bg='white')
-    l3.place(x=115, y=120)
-    en2 = Entry(auth, bg='white')
-    en2.place(x=85, y=150)
 
     def register():
-        f = open('master_password.txt', 'w')
-        f.write(en1.get() + '\n')
-        f.write(en2.get() + '\n')
+        key = load_key()
+        fer = Fernet(key)
+        f = open('master_password.txt', 'wb')
+        en1_encode = en1.get().encode()
+        en1_encrypt = fer.encrypt(en1_encode)
+        f.write(en1_encrypt)
         f.close()
         msg = messagebox.showinfo(title='Success', message='Success!')
         en1.delete(0, 'end')
-        en2.delete(0, 'end')
 
     def login():
-        f = open('master_password.txt', 'r')
-        details = []
+        key = load_key()
+        fer = Fernet(key)
+        f = open('master_password.txt', 'rb')
+        line = ''
         for line in f:
-            details.append(line[:-1])
-        if details[0] == en1.get() and details[1] == en2.get():
+            decoded = fer.decrypt(line)
+            line = decoded.decode()
+
+        if line == en1.get():
             auth.destroy()
             main_app()
         else:
             msg = messagebox.showerror(title='Error', message='Incorrect details!')
             en1.delete(0, 'end')
-            en2.delete(0, 'end')
+        print(line)
         f.close()
-        print(details)
 
     btn1 = Button(auth, text='Login', bg='white', command=login)
-    btn1.place(x=85, y=200)
+    btn1.place(x=85, y=120)
     btn2 = Button(auth, text='Register', bg='white', command=register)
-    btn2.place(x=155, y=200)
+    btn2.place(x=155, y=120)
     auth.mainloop()
 
 
