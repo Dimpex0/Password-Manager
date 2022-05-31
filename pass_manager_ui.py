@@ -10,27 +10,42 @@ def main_app():
     def create_add():
         windwo_add = Tk()
         windwo_add.geometry('400x200')
-        l1_add = Label(windwo_add, text='Website')
+        l1_add = Label(windwo_add, text='Website:')
         l1_add.pack()
         en1_add = Entry(windwo_add, bg='white', bd=5)
         en1_add.pack(side=TOP)
 
         def confirm():
-            f = open('my_passwords.txt', 'a')
+            key = b'2fw657Yh1ENl1XlUboHSuYkijMLCH_2DBz7UzDif1p4='
+            fer = Fernet(key)
+            f = open('my_passwords.txt', 'w')
             f.writelines(en1_add.get() + '|' + en2_add.get() + '\n')
             f.close()
             en1_add.delete(0, 'end')
             en2_add.delete(0, 'end')
+            f.close()
 
-        l2_add = Label(windwo_add, text='Password')
+        def toggle_password():
+            if en2_add.cget('show') == '':
+                en2_add.config(show='*')
+                btn2_add.config(text='Show Password')
+            else:
+                en2_add.config(show='')
+                btn2_add.config(text='Hide Password')
+
+        l2_add = Label(windwo_add, text='Password:')
         l2_add.pack()
-        en2_add = Entry(windwo_add, bg='white', bd=5)
+        en2_add = Entry(windwo_add, show='*', bg='white', bd=5)
         en2_add.pack(side=TOP)
+        btn2_add = Button(windwo_add, text='Show Password', command=toggle_password)
+        btn2_add.pack()
         btn1_add = Button(windwo_add, text='CONFIRM', bg='white', command=confirm)
-        btn1_add.pack()
+        btn1_add.pack(pady=5)
         windwo_add.mainloop()
 
     def create_view():
+        key = b'2fw657Yh1ENl1XlUboHSuYkijMLCH_2DBz7UzDif1p4='
+        fer = Fernet(key)
         filename = 'my_passwords.txt'
         windwo_view = Tk()
         windwo_view.geometry('400x200')
@@ -102,7 +117,7 @@ def authentication():
     en1.place(x=85, y=80)
 
     def register():
-        key = load_key()
+        key = b'2fw657Yh1ENl1XlUboHSuYkijMLCH_2DBz7UzDif1p4='
         fer = Fernet(key)
         f = open('master_password.txt', 'wb')
         en1_encode = en1.get().encode()
@@ -113,7 +128,7 @@ def authentication():
         en1.delete(0, 'end')
 
     def login():
-        key = load_key()
+        key = b'2fw657Yh1ENl1XlUboHSuYkijMLCH_2DBz7UzDif1p4='
         fer = Fernet(key)
         f = open('master_password.txt', 'rb')
         line = ''
