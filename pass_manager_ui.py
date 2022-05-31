@@ -127,7 +127,6 @@ def authentication():
         else:
             msg = messagebox.showerror(title='Error', message='Incorrect details!')
             en1.delete(0, 'end')
-        print(line)
         f.close()
 
     btn1 = Button(auth, text='Login', bg='white', command=login)
