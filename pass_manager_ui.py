@@ -98,7 +98,7 @@ def authentication():
     l1.place(x=110, y=0)
     l2 = Label(auth, text='Password:', bg='white')
     l2.place(x=115, y=50)
-    en1 = Entry(auth, bg='white')
+    en1 = Entry(auth, show='*', bg='white')
     en1.place(x=85, y=80)
 
     def register():
