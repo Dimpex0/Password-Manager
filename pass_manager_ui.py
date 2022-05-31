@@ -18,7 +18,7 @@ def main_app():
         def confirm():
             key = b'2fw657Yh1ENl1XlUboHSuYkijMLCH_2DBz7UzDif1p4='
             fer = Fernet(key)
-            f = open('my_passwords.txt', 'w')
+            f = open('my_passwords.txt', 'a')
             f.writelines(en1_add.get() + '|' + en2_add.get() + '\n')
             f.close()
             en1_add.delete(0, 'end')
