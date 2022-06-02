@@ -1,9 +1,7 @@
-import base64
 from tkinter import *
 from tkinter import messagebox
 from Pmw import ScrolledText
 from cryptography.fernet import Fernet
-from cryptography import *
 
 
 def main_app():
@@ -19,11 +17,16 @@ def main_app():
             key = b'2fw657Yh1ENl1XlUboHSuYkijMLCH_2DBz7UzDif1p4='
             fer = Fernet(key)
             f = open('my_passwords.txt', 'a')
-            f.writelines(en1_add.get() + '|' + en2_add.get() + '\n')
+            data = en1_add.get() + '|' + en2_add.get()
+            encrypted = fer.encrypt(data.encode())
+            passwords = []
+            passwords.append(encrypted.decode())
+            # print(passwords)
+            for i in range(0, len(passwords)):
+                f.write(passwords[i] + '\n')
             f.close()
             en1_add.delete(0, 'end')
             en2_add.delete(0, 'end')
-            f.close()
 
         def toggle_password():
             if en2_add.cget('show') == '':
@@ -60,7 +63,36 @@ def main_app():
                             text_height=4,
                             text_wrap='none', )
         text.pack()
+
+        with open(filename, 'r') as file:
+            store = []
+            for line in file:
+                decrypted = fer.decrypt(line.encode().rstrip(b'\n'))
+                store.append(decrypted.decode())
+        with open(filename, 'w') as file:
+            count = 0
+            for i in range(len(store)):
+                element = store[i]
+                count += 1
+                print(element)
+                file.write(element + '\n')
+
         text.insert('end', open(filename, 'r').read())
+
+        with open(filename, 'r') as file:
+            store_2 = []
+            for line in file:
+                encrypted = fer.encrypt(line.encode().rstrip(b'\n'))
+                store_2.append(encrypted.decode())
+        with open(filename, 'w') as file:
+            count = 0
+            for i in range(len(store)):
+                element = store_2[i]
+                count += 1
+                print(element)
+                print(fer.decrypt(element.encode()))
+                file.write(element + '\n')
+
         Button(top, text='Quit', command=windwo_view.destroy).pack(pady=15)
         windwo_view.mainloop()
 
