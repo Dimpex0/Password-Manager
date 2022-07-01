@@ -154,25 +154,28 @@ def Authentication_Window():
     entry_password.place(x=90, y=180)
 
     def login():
-        f = open('mp.txt', 'r')
-        data = f.read().split(', ')
-        auth = False
-        username = data[0]
-        print(username)
-        password = data[1]
-        print(password)
-        decrypted_username = fer.decrypt(username.encode())
-        decrypted_password = fer.decrypt(password.encode())
-        print(decrypted_username.decode())
-        print(decrypted_password.decode())
-        if entry_name.get() == fer.decrypt(username.encode()).decode() and entry_password.get() == fer.decrypt(
-                password.encode()).decode():
-            auth = True
-        if auth:
-            AuthWindow.destroy()
-            Main_Window()
+        if os.stat('mp.txt').st_size == 0:
+            msg = msg = messagebox.showwarning(title='Error', message="No registered user")
         else:
-            msg = messagebox.showwarning(title='Error', message="Wrong username or password")
+            f = open('mp.txt', 'r')
+            data = f.read().split(', ')
+            auth = False
+            username = data[0]
+            print(username)
+            password = data[1]
+            print(password)
+            decrypted_username = fer.decrypt(username.encode())
+            decrypted_password = fer.decrypt(password.encode())
+            print(decrypted_username.decode())
+            print(decrypted_password.decode())
+            if entry_name.get() == fer.decrypt(username.encode()).decode() and entry_password.get() == fer.decrypt(
+                    password.encode()).decode():
+                auth = True
+            if auth:
+                AuthWindow.destroy()
+                Main_Window()
+            else:
+                msg = messagebox.showwarning(title='Error', message="Wrong username or password")
 
         entry_password.delete(0, 'end')
         entry_name.delete(0, 'end')
