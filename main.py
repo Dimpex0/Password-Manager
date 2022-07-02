@@ -2,10 +2,23 @@ from tkinter import *
 from cryptography.fernet import Fernet
 from tkinter import messagebox
 import os
+import os.path
 from Pmw import ScrolledText
 
 key = b'2fw657Yh1ENl1XlUboHSuYkijMLCH_2DBz7UzDif1p4='
 fer = Fernet(key)
+
+mp_file_path = 'C:/Users/Public/Documents'
+completename_mp = os.path.join(mp_file_path, 'mp.txt')
+with open(completename_mp, 'w') as f1:
+    f1.write('First line')
+    f1.truncate(0)
+
+passwords_path = 'C:/Users/Public/Documents'
+completename_passwords = os.path.join(passwords_path, 'passwords.txt')
+with open(completename_passwords, 'w') as f2:
+    f2.write('First line')
+    f2.truncate(0)
 
 
 def Main_Window():
@@ -38,7 +51,7 @@ def Main_Window():
         def confirm_password():
             encrypted_website = fer.encrypt(entry_website.get().encode())
             encrypted_password = fer.encrypt(password_entry.get().encode())
-            with open('passwords.txt', 'a') as f:
+            with open(completename_passwords, 'a') as f:
                 data = entry_website.get() + ' | ' + password_entry.get()
                 encrypted = fer.encrypt(data.encode())
                 passwords = [encrypted.decode()]
@@ -58,7 +71,7 @@ def Main_Window():
     button_add.place(x=70, y=100)
 
     def remove_password():
-        with open('passwords.txt', 'r+') as file:
+        with open(completename_passwords, 'r+') as file:
             store = []
             for line in file:
                 decrypted = fer.decrypt(line.encode().rstrip(b'\n')).decode()
@@ -67,11 +80,11 @@ def Main_Window():
 
             print(store)
 
-            f = open('passwords.txt', 'r+')
+            f = open(completename_passwords, 'r+')
             f.truncate(0)
             f.close()
 
-            with open('passwords.txt', 'a') as file:
+            with open(completename_passwords, 'a') as file:
                 count = 0
                 for i in range(len(store)):
                     element = store[i]
@@ -87,12 +100,11 @@ def Main_Window():
 
         entry_website.delete(0, 'end')
 
-
     button_remove = Button(mainWindow, text='Remove password', bg='white', command=remove_password)
     button_remove.place(x=210, y=100)
 
     def view_passwords():
-        filename = 'passwords.txt'
+        filename = completename_passwords
         windwo_view = Tk()
         windwo_view.geometry('400x200')
         windwo_view.config(bg='#63666A')
@@ -157,10 +169,10 @@ def Authentication_Window():
     entry_password.place(x=60, y=180)
 
     def login():
-        if os.stat('mp.txt').st_size == 0:
+        if os.stat(completename_mp).st_size == 0:
             msg = msg = messagebox.showwarning(title='Error', message="No registered user")
         else:
-            f = open('mp.txt', 'r')
+            f = open(completename_mp, 'r')
             data = f.read().split(', ')
             auth = False
             username = data[0]
@@ -187,8 +199,8 @@ def Authentication_Window():
     button_login.place(x=60, y=250)
 
     def register(username, password):
-        if os.stat('mp.txt').st_size == 0:
-            f = open('mp.txt', 'a')
+        if os.stat(completename_mp).st_size == 0:
+            f = open(completename_mp, 'a')
             encrypted_username = fer.encrypt(username.encode())
             encrypted_password = fer.encrypt(password.encode())
             f.writelines(f"{encrypted_username.decode()}, {encrypted_password.decode()}")
