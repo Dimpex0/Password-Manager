@@ -10,15 +10,16 @@ fer = Fernet(key)
 
 mp_file_path = 'C:/Users/Public/Documents'
 completename_mp = os.path.join(mp_file_path, 'mp.txt')
-with open(completename_mp, 'w') as f1:
-    f1.write('First line')
-    f1.truncate(0)
+with open(completename_mp, 'a') as f1:
+    f1.writelines('')
+
+
 
 passwords_path = 'C:/Users/Public/Documents'
 completename_passwords = os.path.join(passwords_path, 'passwords.txt')
-with open(completename_passwords, 'w') as f2:
-    f2.write('First line')
-    f2.truncate(0)
+with open(completename_passwords, 'a') as f2:
+    f2.writelines('')
+
 
 
 def Main_Window():
