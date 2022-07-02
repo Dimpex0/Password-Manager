@@ -11,6 +11,7 @@ fer = Fernet(key)
 def Main_Window():
     mainWindow = Tk()
     mainWindow.title('Password Manager')
+    mainWindow.config(bg='#63666A')
     mainWindow.geometry('400x200')
     website_label = Label(mainWindow, text='Enter Website:', font='Helvetica 10')
     website_label.place(x=147, y=30)
@@ -21,6 +22,7 @@ def Main_Window():
         add_password_window = Tk()
         add_password_window.title('Add password')
         add_password_window.geometry('300x100')
+        add_password_window.config(bg='#63666A')
         password_entry = Entry(add_password_window, bg='white', bd=5)
         password_entry.place(x=60, y=25)
 
@@ -39,8 +41,7 @@ def Main_Window():
             with open('passwords.txt', 'a') as f:
                 data = entry_website.get() + ' | ' + password_entry.get()
                 encrypted = fer.encrypt(data.encode())
-                passwords = []
-                passwords.append(encrypted.decode())
+                passwords = [encrypted.decode()]
                 # print(passwords)
                 for i in range(0, len(passwords)):
                     f.write(passwords[i] + '\n')
@@ -94,6 +95,7 @@ def Main_Window():
         filename = 'passwords.txt'
         windwo_view = Tk()
         windwo_view.geometry('400x200')
+        windwo_view.config(bg='#63666A')
         top = Frame(windwo_view)
         top.pack(side='top')
         text = ScrolledText(top, borderframe=5,
@@ -143,15 +145,16 @@ def Main_Window():
 def Authentication_Window():
     AuthWindow = Tk()
     AuthWindow.title('Authentication')
+    AuthWindow.config(bg='#63666A')
     AuthWindow.geometry('300x350')
-    label_name = Label(AuthWindow, text='Enter Username:', font='Helvetica 13')
+    label_name = Label(AuthWindow, text='Enter Username:', bg='#63666A', font='Helvetica 13')
     label_name.place(x=90, y=70)
-    entry_name = Entry(AuthWindow, bg='white', bd=5)
-    entry_name.place(x=90, y=100)
-    label_password = Label(AuthWindow, text='Enter Password:', font='Helvetica 13')
+    entry_name = Entry(AuthWindow, bg='white', bd=5, width=30)
+    entry_name.place(x=60, y=100)
+    label_password = Label(AuthWindow, text='Enter Password:', bg='#63666A', font='Helvetica 13')
     label_password.place(x=92, y=150)
-    entry_password = Entry(AuthWindow, show='*', bg='white', bd=5)
-    entry_password.place(x=90, y=180)
+    entry_password = Entry(AuthWindow, show='*', bg='white', bd=5, width=30)
+    entry_password.place(x=60, y=180)
 
     def login():
         if os.stat('mp.txt').st_size == 0:
@@ -197,9 +200,9 @@ def Authentication_Window():
         entry_password.delete(0, 'end')
         entry_name.delete(0, 'end')
 
-    button_register = Button(AuthWindow, text='Register', height=1, width=10,
+    button_register = Button(AuthWindow, text='Register', height=1, width=12,
                              command=lambda: register(entry_name.get(), entry_password.get()))
-    button_register.place(x=165, y=250)
+    button_register.place(x=160, y=250)
     AuthWindow.mainloop()
 
 
